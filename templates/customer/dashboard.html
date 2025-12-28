@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard{% endblock %}
+
+{% block content %}
+<div class="glass-container">
+    <h2>Welcome, {{ user.username }}</h2>
+    <div style="display: flex; gap: 2rem; align-items: center;">
+        <div class="card">
+            <h3>My Risk Score</h3>
+            <div class="risk-score">{{ user.risk_score }}</div>
+            {% if user.is_flagged %}
+            <span class="badge badge-danger">Account Flagged</span>
+            {% else %}
+            <span class="badge badge-success">Good Standing</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <h3>My Orders</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>#{{ order.id }}</td>
+                <td>{{ order.order_date.strftime('%Y-%m-%d') }}</td>
+                <td>${{ order.total_amount }}</td>
+                <td>
+                    <span class="badge badge-success">{{ order.status }}</span>
+                </td>
+                <td>
+                    <a href="{{ url_for('dashboard.order_details', order_id=order.id) }}"
+                        class="btn btn-sm btn-secondary">View Details</a>
+                    {% if order.status == 'delivered' %}
+                    <a href="{{ url_for('dashboard.request_return', order_id=order.id) }}"
+                        class="btn btn-sm btn-warning">Return</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>My Returns</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Return ID</th>
+                <th>Order ID</th>
+                <th>Reason</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ret in returns %}
+            <tr>
+                <td>#{{ ret.id }}</td>
+                <td>#{{ ret.order_id }}</td>
+                <td>{{ ret.reason }}</td>
+                <td>
+                    {% if ret.status == 'approved' %}
+                    <span class="badge badge-success">Approved</span>
+                    {% elif ret.status == 'pending' %}
+                    <span class="badge badge-warning">Pending</span>
+                    {% else %}
+                    <span class="badge badge-danger">Rejected</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

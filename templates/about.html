@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<div class="glass-container" style="max-width: 900px; padding: 3rem;">
+    <h1 style="text-align: center; font-size: 3rem; margin-bottom: 2rem; color: var(--primary-color);">About Cartizo
+    </h1>
+
+    <div style="margin-bottom: 3rem; text-align: center;">
+        <p style="font-size: 1.2rem; line-height: 1.8; color: #555;">
+            Welcome to Cartizo, your premium destination for high-quality lifestyle products.
+            We believe in delivering more than just goods—we deliver an experience.
+            Our curated collection allows you to shop with confidence, knowing each item meets our strict standards for
+            quality and design.
+        </p>
+    </div>
+
+    <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+        <div style="background: rgba(255,255,255,0.5); padding: 1.5rem; border-radius: 12px; text-align: center;">
+            <i class="fas fa-bullseye"
+                style="font-size: 2.5rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
+            <h3>Our Mission</h3>
+            <p>To provide a seamless, secure, and enjoyable shopping experience for customers worldwide, backed by
+                exceptional support.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.5); padding: 1.5rem; border-radius: 12px; text-align: center;">
+            <i class="fas fa-heart" style="font-size: 2.5rem; color: var(--danger-color); margin-bottom: 1rem;"></i>
+            <h3>Our Values</h3>
+            <p>Transparency, Quality, and Customer First. We prioritize your satisfaction above all else.</p>
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <h2 style="margin-bottom: 1.5rem;">Why Choose Cartizo?</h2>
+        <ul style="list-style: none; padding: 0; font-size: 1.1rem; line-height: 2;">
+            <li><i class="fas fa-check-circle" style="color: var(--success-color); margin-right: 10px;"></i>
+                Professional Grade Quality</li>
+            <li><i class="fas fa-check-circle" style="color: var(--success-color); margin-right: 10px;"></i> Fast &
+                Secure Shipping</li>
+            <li><i class="fas fa-check-circle" style="color: var(--success-color); margin-right: 10px;"></i> 10-Day Easy
+                Return Policy</li>
+            <li><i class="fas fa-check-circle" style="color: var(--success-color); margin-right: 10px;"></i> Dedicated
+                Customer Support</li>
+        </ul>
+        <div style="margin-top: 2rem;">
+            <a href="{{ url_for('shop.index') }}" class="btn btn-primary btn-lg">Shop Our Collection</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

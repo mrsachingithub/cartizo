@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 2rem;">
+    <div class="glass-container"
+        style="padding: 4rem 2rem; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&auto=format&fit=crop&q=80'); background-size: cover; background-position: center; color: white; border-radius: 20px;">
+        <h1 style="font-size: 3.5rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Welcome to Cartizo
+        </h1>
+        <p style="font-size: 1.5rem; margin-bottom: 2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Experience Premium
+            Shopping with Peace of Mind</p>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Start Shopping</a>
+    </div>
+</div>
+
+<div class="glass-container">
+    <h2 style="text-align: center; margin-bottom: 2rem;">Why Shop With Us?</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+        <div style="text-align: center;">
+            <i class="fas fa-truck" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+            <h3>Fast Delivery</h3>
+            <p>Get your favorite products delivered to your doorstep in record time.</p>
+        </div>
+        <div style="text-align: center;">
+            <i class="fas fa-shield-alt" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+            <h3>Secure Returns</h3>
+            <p>Our fair return policy (10 days) ensures a safe shopping environment for everyone.</p>
+        </div>
+        <div style="text-align: center;">
+            <i class="fas fa-star" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+            <h3>Premium Quality</h3>
+            <p>We curate only the best products to ensure your complete satisfaction.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

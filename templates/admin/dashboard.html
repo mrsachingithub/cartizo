@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="glass-container">
+    <h2>Admin Dashboard</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div>
+            <h3>High Risk Users</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Risk Score</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in high_risk_users %}
+                    <tr>
+                        <td>#{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td style="color: var(--danger-color); font-weight: bold;">{{ user.risk_score }}</td>
+                        <td>
+                            {% if user.is_flagged %}
+                            <span class="badge badge-danger">Flagged</span>
+                            {% else %}
+                            <span class="badge badge-warning">High Risk</span>
+                            {% endif %}
+                            {% if user.is_blocked %}
+                            <span class="badge badge-dark" style="background-color: #333;">Blocked</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.is_blocked %}
+                            <form
+                                action="{{ url_for('dashboard.toggle_block_user', user_id=user.id, action='unblock') }}"
+                                method="POST" style="display:inline;">
+                                <button class="btn btn-success"
+                                    style="padding: 5px 10px; font-size: 0.8em;">Unblock</button>
+                            </form>
+                            {% else %}
+                            <form action="{{ url_for('dashboard.toggle_block_user', user_id=user.id, action='block') }}"
+                                method="POST" style="display:inline;">
+                                <button class="btn btn-danger"
+                                    style="padding: 5px 10px; font-size: 0.8em;">Block</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h3>Pending Return Requests</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Reason</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ret in pending_returns %}
+                    <tr>
+                        <td>#{{ ret.id }}</td>
+                        <td>{{ ret.user.username }} (#{{ ret.user.id }})</td>
+                        <td>{{ ret.reason }}</td>
+                        <td>${{ ret.refund_amount }}</td>
+                        <td>
+                            <a href="{{ url_for('dashboard.order_details', order_id=ret.order.id) }}" class="btn"
+                                style="padding: 5px 10px; background-color: #555; font-size: 0.8em; margin-bottom: 5px; display: inline-block;">View
+                                Order</a>
+                            <form
+                                action="{{ url_for('dashboard.process_return', request_id=ret.id, action='approve') }}"
+                                method="POST" style="display:inline;">
+                                <button class="btn btn-success"
+                                    style="padding: 5px 10px; font-size: 0.8em;">Approve</button>
+                            </form>
+                            <form action="{{ url_for('dashboard.process_return', request_id=ret.id, action='reject') }}"
+                                method="POST" style="display:inline;">
+                                <button class="btn btn-danger"
+                                    style="padding: 5px 10px; font-size: 0.8em;">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

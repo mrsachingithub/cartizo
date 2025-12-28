@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="glass-container" style="max-width: 800px;">
+    <h2>Checkout</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div>
+            <h3>Order Summary</h3>
+            <div style="background: rgba(255,255,255,0.5); padding: 1rem; border-radius: 8px;">
+                {% for item in cart_items %}
+                <div
+                    style="display: flex; justify-content: space-between; border-bottom: 1px solid #ccc; padding: 5px 0;">
+                    <span>{{ item.qty }}x {{ item.product.name }}</span>
+                    <span>${{ "%.2f"|format(item.product.price * item.qty) }}</span>
+                </div>
+                {% endfor %}
+                <div
+                    style="display: flex; justify-content: space-between; font-weight: bold; margin-top: 10px; font-size: 1.2rem;">
+                    <span>Total</span>
+                    <span>${{ "%.2f"|format(total_price) }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h3>Payment Details</h3>
+            <form method="POST" id="checkout-form">
+                <div class="form-group">
+                    <label for="card_name">Name on Card</label>
+                    <input type="text" id="card_name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="card_number">Card Number</label>
+                    <input type="text" id="card_number" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group">
+                        <label for="expiry">Expiry</label>
+                        <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cvc">CVC</label>
+                        <input type="text" id="cvc" placeholder="123" maxlength="3" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success"
+                    style="width: 100%; font-size: 1.2rem; margin-top: 1rem;">Pay ${{ "%.2f"|format(total_price)
+                    }}</button>
+            </form>
+            <a href="{{ url_for('shop.cart') }}" class="btn"
+                style="background-color: #777; width: 100%; margin-top: 10px; text-align: center;">Back to Cart</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

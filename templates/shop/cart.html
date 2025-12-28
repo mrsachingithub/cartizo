@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Shopping Cart{% endblock %}
+
+{% block content %}
+<div class="glass-container">
+    <h2>Your Cart</h2>
+    {% if cart_items %}
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>${{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" style="text-align: right; font-weight: bold;">Grand Total:</td>
+                <td style="font-weight: bold; font-size: 1.2em;">${{ total_price }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div style="margin-top: 2rem; display: flex; justify-content: space-between;">
+        <a href="{{ url_for('shop.clear_cart') }}" class="btn btn-danger">Clear Cart</a>
+        <a href="{{ url_for('shop.checkout') }}" class="btn btn-success">Proceed to Checkout</a>
+    </div>
+    {% else %}
+    <p>Your cart is empty.</p>
+    <a href="{{ url_for('shop.index') }}" class="btn btn-secondary">Continue Shopping</a>
+    {% endif %}
+</div>
+{% endblock %}
