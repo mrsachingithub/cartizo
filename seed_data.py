@@ -2,6 +2,8 @@ from app import create_app, db
 from models import User, Order
 from werkzeug.security import generate_password_hash
 from datetime import datetime
+import os
+
 
 app = create_app()
 
@@ -14,7 +16,8 @@ with app.app_context():
         admin = User(
             username='admin',
             email='admin@refundguard.com',
-            password_hash=generate_password_hash('admin123'),
+            password_hash=generate_password_hash(os.getenv('ADMIN_PASSWORD', 'admin123')),
+
             role='admin'
         )
         db.session.add(admin)
